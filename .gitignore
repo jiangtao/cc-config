@@ -1,0 +1,20 @@
+# 插件缓存（不进 Git，通过 cache-plugin.sh 手动管理）
+cache/*.tar.gz
+cache/*.tmp
+
+# 备份文件
+cache/cache_backup_*/
+
+# 系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 临时文件
+*.swp
+*.swo
+*~
