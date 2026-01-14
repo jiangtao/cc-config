@@ -19,8 +19,15 @@ formatters:
 
 linters-settings:
   govet:
-    disable:
-      - printf
+    disable-all: true
+    enable:
+      - atomic
+      - bools
+      - composites
+      - copylocks
+      - nilfunc
+      - stdmethods
+      - structtag
 
 issues:
   max-issues-per-linter: 0

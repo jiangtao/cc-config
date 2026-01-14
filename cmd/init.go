@@ -93,8 +93,11 @@ func runInit(cmd *cobra.Command, args []string) error {
 
 			// Add remote if specified
 			if initGitURL != "" {
-				git.AddRemote(expandedRepo, "origin", initGitURL)
-				ui.Success("Git remote 'origin' set to: %s", initGitURL)
+				if err := git.AddRemote(expandedRepo, "origin", initGitURL); err != nil {
+					ui.Warning("Failed to add git remote: %v", err)
+				} else {
+					ui.Success("Git remote 'origin' set to: %s", initGitURL)
+				}
 			}
 
 			// Create .gitignore

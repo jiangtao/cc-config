@@ -20,12 +20,10 @@ var restoreCmd = &cobra.Command{
 }
 
 var (
-	restoreRepo        string
-	restoreNoPull      bool
-	restoreProject     []string
-	restoreAllProjects bool
-	restoreCache       bool
-	restoreDryRun      bool
+	restoreRepo   string
+	restoreNoPull bool
+	restoreCache  bool
+	restoreDryRun bool
 )
 
 func init() {
@@ -33,8 +31,6 @@ func init() {
 
 	restoreCmd.Flags().StringP("repo", "r", "", "Config repository path")
 	restoreCmd.Flags().Bool("pull", true, "Auto git pull")
-	restoreCmd.Flags().StringArray("project", nil, "Restore specific project (format: name:path)")
-	restoreCmd.Flags().Bool("all-projects", false, "Restore all project configs")
 	restoreCmd.Flags().Bool("restore-cache", false, "Restore plugin cache")
 	restoreCmd.Flags().Bool("dry-run", false, "Preview mode, don't write")
 }
@@ -71,8 +67,6 @@ func runRestore(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("config repository not found: %s", expandedRepo)
 	}
 
-	step := 1
-
 	// Step 1: Git pull
 	if restoreNoPull {
 		ui.Skipped(i18n.T("restore.steps.update", nil))
@@ -89,7 +83,6 @@ func runRestore(cmd *cobra.Command, args []string) error {
 			}
 		}
 	}
-	step++
 
 	// Step 2: Create Claude directories
 	ui.Println(ui.Cyan, i18n.T("restore.steps.create_dirs", nil))
@@ -101,7 +94,6 @@ func runRestore(cmd *cobra.Command, args []string) error {
 		}
 	}
 	ui.Success("Directories created")
-	step++
 
 	// Step 3: Restore settings
 	settingsRestore := restore.NewSettingsRestore()
@@ -110,7 +102,6 @@ func runRestore(cmd *cobra.Command, args []string) error {
 			ui.Error("Settings restore failed: %v", err)
 		}
 	}
-	step++
 
 	// Step 4: Restore commands
 	commandsRestore := restore.NewCommandsRestore()
@@ -119,7 +110,6 @@ func runRestore(cmd *cobra.Command, args []string) error {
 			ui.Error("Commands restore failed: %v", err)
 		}
 	}
-	step++
 
 	// Step 5: Restore skills
 	skillsRestore := restore.NewSkillsRestore()
@@ -128,7 +118,6 @@ func runRestore(cmd *cobra.Command, args []string) error {
 			ui.Error("Skills restore failed: %v", err)
 		}
 	}
-	step++
 
 	// Step 6: Restore cache
 	if restoreCache {

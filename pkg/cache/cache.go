@@ -145,7 +145,9 @@ func Restore(repoPath string) error {
 		targetPath := filepath.Join(claudeDir, "plugins", header.Name)
 
 		if header.Typeflag == tar.TypeDir {
-			os.MkdirAll(targetPath, 0755)
+			if err := os.MkdirAll(targetPath, 0755); err != nil {
+				return err
+			}
 		} else {
 			if err := os.MkdirAll(filepath.Dir(targetPath), 0755); err != nil {
 				return err

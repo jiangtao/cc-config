@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"time"
 
@@ -72,33 +71,28 @@ func runBackup(cmd *cobra.Command, args []string) error {
 	}
 
 	// Step 1: Backup settings
-	step := 1
 	settingsBackup := backup.NewSettingsBackup(backupNoSettings)
 	if err := settingsBackup.Backup(claudeDir, configDir); err != nil {
 		ui.Error("Settings backup failed: %v", err)
 	}
-	step++
 
 	// Step 2: Backup commands
 	commandsBackup := backup.NewCommandsBackup(backupNoCommands)
 	if err := commandsBackup.Backup(claudeDir, configDir); err != nil {
 		ui.Error("Commands backup failed: %v", err)
 	}
-	step++
 
 	// Step 3: Backup skills
 	skillsBackup := backup.NewSkillsBackup(backupNoSkills)
 	if err := skillsBackup.Backup(claudeDir, configDir); err != nil {
 		ui.Error("Skills backup failed: %v", err)
 	}
-	step++
 
 	// Step 4: Backup projects
 	projectsBackup := backup.NewProjectsBackup(backupProjects, backupAll)
 	if err := projectsBackup.Backup(configDir); err != nil {
 		ui.Error("Projects backup failed: %v", err)
 	}
-	step++
 
 	// Step 5: Git commit
 	if !backupNoCommit {
@@ -133,14 +127,4 @@ func runBackup(cmd *cobra.Command, args []string) error {
 	ui.Println(ui.BoldBlue, "\n=== Backup Complete ===\n")
 
 	return nil
-}
-
-// detectPluginsCount detects the number of enabled plugins
-func detectPluginsCount() int {
-	// Check if jq is available
-	if _, err := exec.LookPath("jq"); err != nil {
-		return 0
-	}
-	// TODO: Parse settings.json to count plugins
-	return 0
 }

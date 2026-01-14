@@ -16,15 +16,13 @@ var cacheCmd = &cobra.Command{
 }
 
 var (
-	cacheRepo  string
-	cacheForce bool
+	cacheRepo string
 )
 
 func init() {
 	GetRootCommand().AddCommand(cacheCmd)
 
 	cacheCmd.PersistentFlags().StringP("repo", "r", "", "Config repository path")
-	cacheCmd.PersistentFlags().BoolP("force", "f", false, "Skip confirmation")
 
 	// Add subcommands
 	cacheCmd.AddCommand(cacheBackupCmd)
