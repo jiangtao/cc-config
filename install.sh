@@ -2,8 +2,8 @@
 set -e
 
 # ccconfig One-Click Installer
-# Usage: curl -fsSL https://get.ccconfig.dev | bash
-#        or: curl -fsSL https://cc-config.vercel.app/install.sh | bash
+# Usage: curl -fsSL https://jiangtao.vercel.app/install.sh | bash
+#        or: curl -fsSL https://jiangtao.vercel.app/install.sh | bash
 
 REPO="jiangtao/cc-config"
 GITHUB_BASE="https://github.com/${REPO}"

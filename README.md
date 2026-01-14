@@ -10,12 +10,7 @@
 
 **One-line install (macOS/Linux):**
 ```bash
-curl -fsSL https://get.ccconfig.dev | bash
-```
-
-Or:
-```bash
-curl -fsSL https://cc-config.vercel.app/install.sh | bash
+curl -fsSL https://jiangtao.vercel.app/install.sh | bash
 ```
 
 ## Why ccconfig?

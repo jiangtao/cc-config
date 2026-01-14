@@ -4,7 +4,7 @@ run:
   modules-download-mode: readonly
 
 linters:
-  disable-all: true
+  disable-all: false
   enable:
     - gofmt
     - govet
@@ -12,16 +12,20 @@ linters:
     - staticcheck
     - unused
     - gosimple
-    - structcheck
-    - varcheck
     - ineffassign
-    - deadcode
 
 linters-settings:
   govet:
-    enable-all: true
-    disable:
-      - shadow
+    enable-all: false
+    enable:
+      - atomic
+      - bools
+      - composites
+      - copylocks
+      - nilfunc
+      - printf
+      - stdmethods
+      - unreach
 
 issues:
   exclude-use-default: false
