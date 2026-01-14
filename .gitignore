@@ -18,3 +18,12 @@ Thumbs.db
 *.swp
 *.swo
 *~
+docs/plans
+# 构建产物
+build/
+
+# Web landing page
+web/node_modules/
+web/.next/
+web/.env.local
+web/.vercel
