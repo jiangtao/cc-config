@@ -24,46 +24,46 @@ var (
 )
 
 // Success prints a success message
-func Success(format string, args ...interface{}) {
-	fmt.Printf("%s %s\n", Green("✓"), fmt.Sprintf(format, args...))
+func Success(msg string, args ...interface{}) {
+	fmt.Printf("%s %s\n", Green("✓"), fmt.Sprintf(msg, args...))
 }
 
 // Warning prints a warning message
-func Warning(format string, args ...interface{}) {
-	fmt.Printf("%s %s\n", Yellow("⚠"), fmt.Sprintf(format, args...))
+func Warning(msg string, args ...interface{}) {
+	fmt.Printf("%s %s\n", Yellow("⚠"), fmt.Sprintf(msg, args...))
 }
 
 // Error prints an error message
-func Error(format string, args ...interface{}) {
-	fmt.Printf("%s %s\n", Red("✗"), fmt.Sprintf(format, args...))
+func Error(msg string, args ...interface{}) {
+	fmt.Printf("%s %s\n", Red("✗"), fmt.Sprintf(msg, args...))
 }
 
 // Info prints an info message
-func Info(format string, args ...interface{}) {
-	fmt.Printf("%s %s\n", Blue("ℹ"), fmt.Sprintf(format, args...))
+func Info(msg string, args ...interface{}) {
+	fmt.Printf("%s %s\n", Blue("ℹ"), fmt.Sprintf(msg, args...))
 }
 
 // Skipped prints a skipped message
-func Skipped(format string, args ...interface{}) {
-	fmt.Printf("%s %s\n", Gray("⊘"), fmt.Sprintf(format, args...))
+func Skipped(msg string, args ...interface{}) {
+	fmt.Printf("%s %s\n", Gray("⊘"), fmt.Sprintf(msg, args...))
 }
 
 // Title prints a title
-func Title(format string, args ...interface{}) {
-	fmt.Printf("\n%s %s\n\n", BoldBlue("==="), fmt.Sprintf(format, args...))
+func Title(msg string, args ...interface{}) {
+	fmt.Printf("\n%s %s\n\n", BoldBlue("==="), fmt.Sprintf(msg, args...))
 }
 
 // Step prints a step message
-func Step(step, total int, format string, args ...interface{}) {
-	fmt.Printf("%s %s\n", Cyan(fmt.Sprintf("[%d/%d]", step, total)), fmt.Sprintf(format, args...))
+func Step(step, total int, msg string, args ...interface{}) {
+	fmt.Printf("%s %s\n", Cyan(fmt.Sprintf("[%d/%d]", step, total)), fmt.Sprintf(msg, args...))
 }
 
 // Println prints colored text
-func Println(colorFn func(...interface{}) string, format string, args ...interface{}) {
-	fmt.Println(colorFn(fmt.Sprintf(format, args...)))
+func Println(colorFn func(...interface{}) string, msg string, args ...interface{}) {
+	fmt.Println(colorFn(fmt.Sprintf(msg, args...)))
 }
 
 // Printf prints formatted colored text
-func Printf(colorFn func(...interface{}) string, format string, args ...interface{}) {
-	fmt.Print(colorFn(fmt.Sprintf(format, args...)))
+func Printf(colorFn func(...interface{}) string, msg string, args ...interface{}) {
+	fmt.Print(colorFn(fmt.Sprintf(msg, args...)))
 }
