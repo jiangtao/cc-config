@@ -1,59 +1,56 @@
-# Claude Code 配置迁移工具
+# ccconfig
 
-用于快速迁移 Claude Code 配置（插件、技能、命令等）到其他电脑。
+> Claude Code configuration backup/restore tool - Sync your settings, commands, skills, and project configs across machines.
 
-## 功能
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jiangtao/ccconfig)](https://goreportcard.com/report/github.com/jiangtao/ccconfig)
 
-- ✅ 自动备份全局配置（settings.json）
-- ✅ 备份自定义命令和技能
-- ✅ 收集所有项目的 `.claude` 配置
-- ✅ 手动管理插件缓存（大文件）
-- ✅ Git 版本控制，安全可靠
-- ✅ 敏感信息（API Token）自动排除
-- ✅ Go CLI 工具，跨平台单一二进制
-- ✅ 国际化支持（中文/英文）
-- ✅ GitHub Actions 自动恢复
+## Why ccconfig?
 
-## 方案选择
+When you use Claude Code across multiple computers, keeping your configurations synchronized is painful:
 
-本项目提供两套实现：
+- Custom commands you created on your work machine
+- Skills you've built or installed
+- Project-specific Claude settings
+- Model preferences and plugin configurations
 
-### 1. Bash 脚本（原始方案）
+**ccconfig solves this by backing up everything to Git and restoring it on any machine with a single command.**
 
-适合熟悉 Shell 脚本的用户，无需编译。
+## Features
 
-### 2. Go CLI（推荐）
+- One-command backup of all Claude Code configurations
+- Automatic project discovery (scans common directories)
+- Git-based version control for your configs
+- Plugin cache management (large files handled separately)
+- Sensitive data protection (API tokens never stored in Git)
+- Cross-platform single binary (macOS/Linux/Windows)
+- Internationalization (English/中文)
 
-- 单一二进制文件，无需依赖
-- 跨平台支持（macOS/Linux/Windows）
-- 更好的错误处理
-- 国际化支持
+## Quick Start
 
----
+### Installation
 
-## Go CLI 快速开始
+**Option 1: Download binary (Recommended)**
 
-### 安装
-
-**从 Release 下载：**
 ```bash
 # macOS (Apple Silicon)
 curl -L https://github.com/jiangtao/ccconfig/releases/latest/download/ccconfig-darwin-arm64 -o ccconfig
 chmod +x ccconfig
-mv ccconfig /usr/local/bin/
+sudo mv ccconfig /usr/local/bin/
 
 # macOS (Intel)
 curl -L https://github.com/jiangtao/ccconfig/releases/latest/download/ccconfig-darwin-amd64 -o ccconfig
 chmod +x ccconfig
-mv ccconfig /usr/local/bin/
+sudo mv ccconfig /usr/local/bin/
 
 # Linux
 curl -L https://github.com/jiangtao/ccconfig/releases/latest/download/ccconfig-linux-amd64 -o ccconfig
 chmod +x ccconfig
-mv ccconfig /usr/local/bin/
+sudo mv ccconfig /usr/local/bin/
 ```
 
-**从源码编译：**
+**Option 2: Build from source**
+
 ```bash
 git clone https://github.com/jiangtao/ccconfig.git
 cd ccconfig
@@ -61,276 +58,195 @@ make build
 sudo make install
 ```
 
-### 基础使用
+### Initial Setup
+
+On your first computer:
 
 ```bash
-# 查看帮助
-ccconfig --help
+# 1. Create your config repository
+mkdir -p ~/cc-config
+cd ~/cc-config
+git init
+git remote add origin git@github.com:YOURUSERNAME/cc-config.git
 
-# 初始化配置仓库
-ccconfig init --git-url git@github.com:user/ccconfig.git
+# 2. Backup your configurations
+ccconfig backup --repo ~/cc-config
 
-# 备份配置
+# 3. Push to GitHub
+git add .
+git commit -m "Initial backup"
+git push -u origin main
+```
+
+### On a New Computer
+
+```bash
+# 1. Clone your config repository
+git clone git@github.com:YOURUSERNAME/cc-config.git ~/cc-config
+
+# 2. Restore everything
+ccconfig restore --repo ~/cc-config
+```
+
+That's it! All your Claude Code configurations are now restored.
+
+## Usage
+
+### Backup Command
+
+```bash
+# Basic backup (uses repo from config file)
 ccconfig backup
 
-# 恢复配置
-ccconfig restore
+# Specify repo location
+ccconfig backup --repo ~/cc-config
 
-# 使用中文界面
+# Backup specific projects only
+ccconfig backup --projects ~/work/project1 --projects ~/projects/project2
+
+# Auto-discover ALL Claude projects on your system
+ccconfig backup --all-projects
+
+# Backup only settings (skip commands, skills, projects)
+ccconfig backup --no-commands --no-skills --no-projects
+
+# Use Chinese interface
 ccconfig backup --lang zh
 ```
 
-### 命令说明
-
-#### backup - 备份配置
+### Restore Command
 
 ```bash
-# 基础备份
-ccconfig backup
-
-# 指定项目目录
-ccconfig backup --projects ~/work --projects ~/projects
-
-# 自动扫描所有项目
-ccconfig backup --all-projects
-
-# 只备份项目配置
-ccconfig backup --no-settings --no-commands --no-skills --all-projects
-```
-
-#### restore - 恢复配置
-
-```bash
-# 基础恢复
+# Basic restore
 ccconfig restore
 
-# 预览模式（不实际写入）
+# Preview mode (see what would change without actually changing)
 ccconfig restore --dry-run
 
-# 跳过 git pull
+# Skip git pull (use local state as-is)
 ccconfig restore --pull=false
+
+# Restore specific components only
+ccconfig restore --no-commands --no-skills
 ```
 
-#### cache - 插件缓存管理
+### Plugin Cache Management
+
+Plugin caches are large (~1GB) and not included in regular backups. Manage them separately:
 
 ```bash
-# 备份插件缓存
+# Backup plugin cache (creates tar.gz)
 ccconfig cache backup
 
-# 恢复插件缓存
+# Restore plugin cache
 ccconfig cache restore
 
-# 清理缓存
+# Clean up cache files
 ccconfig cache clean
 ```
 
-### 配置文件
+## Configuration
 
-创建 `~/.ccconfig.yaml` 持久化配置：
+Create `~/.ccconfig.yaml` to persist your preferences:
 
 ```yaml
-# 配置仓库路径
+# Configuration repository path
 repo: ~/cc-config
 
-# 项目路径列表
+# Project directories to scan
 projects:
   - ~/work
   - ~/projects
   - ~/dev
+  - ~/code
 
-# 默认语言 (en/zh)
+# Default language (en or zh)
 lang: en
 
-# Git 设置
+# Git automation
 git:
-  autoCommit: false
-  autoPull: false
+  autoCommit: true   # Auto-commit after backup
+  autoPush: false    # Auto-push after backup
 
-# 备份设置
+# Backup options
 backup:
-  includeSettings: true
-  includeCommands: true
-  includeSkills: true
+  includeSettings: true    # Backup global settings.json
+  includeCommands: true    # Backup custom commands
+  includeSkills: true      # Backup custom skills
+  includeProjects: true    # Backup project .claude configs
 ```
 
----
+## What Gets Backed Up?
 
-## Bash 脚本（原始方案）
+| Component | Location | Backed Up | Notes |
+|-----------|----------|-----------|-------|
+| Global Settings | `~/.claude/settings.json` | Yes | API token removed for security |
+| Custom Commands | `~/.claude/commands/` | Yes | All custom commands |
+| Custom Skills | `~/.claude/skills/` | Yes | All custom skills |
+| Project Configs | `*/.claude/` | Yes | Auto-scanned from configured paths |
+| Plugin Caches | `~/.claude/cache/` | Separate | Use `ccconfig cache` commands |
 
-## 目录结构
+## Security
 
+- **API Tokens**: Never stored in Git. You'll be prompted to enter them on restore.
+- **Sensitive Data**: Settings are filtered before backup to remove secrets.
+- **Private Repo**: Use a private GitHub repository for your configs.
+
+## Advanced Usage
+
+### GitHub Actions Auto-Restore
+
+Set up automatic restore when configuration changes:
+
+```yaml
+# .github/workflows/restore.yml
+name: Restore Claude Config
+on:
+  push:
+    paths: ['config/**']
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jiangtao/ccconfig/actions/restore@main
+        with:
+          repo: '.'
 ```
-cc-config/
-├── .git/                    # Git 仓库
-├── .gitignore               # 忽略 cache/*.tar.gz
-├── backup.sh                # 自动备份脚本
-├── restore.sh               # 恢复配置脚本
-├── cache-plugin.sh          # 插件缓存管理
-├── config/                  # Git 追踪的配置
-│   ├── settings.json        # 全局配置（无 API Token）
-│   ├── commands/            # 自定义命令
-│   ├── skills/              # 自定义技能
-│   └── project-configs/     # 项目配置
-└── cache/                   # 不进 Git
-    └── plugins-cache.tar.gz # 插件缓存（手动打包）
-```
 
-## 快速开始
-
-### 首次设置（源电脑）
+### Daily Backups with Cron
 
 ```bash
-# 1. 克隆/初始化仓库
-git clone git@github.com:jiangtao/cc-config.git ~/cc-config
-cd ~/cc-config
-
-# 2. 给脚本添加执行权限
-chmod +x *.sh
-
-# 3. 运行备份
-./backup.sh
-
-# 4. 推送到远程
-git push
+# Add to crontab: crontab -e
+# Backup every day at 6 PM
+0 18 * * * /usr/local/bin/ccconfig backup --repo ~/cc-config
 ```
 
-### 迁移到新电脑
+## Troubleshooting
 
-```bash
-# 1. 克隆仓库
-git clone git@github.com:jiangtao/cc-config.git ~/cc-config
-cd ~/cc-config
+**"No projects found"**
+- Add your project directories to `~/.ccconfig.yaml` under `projects:`
+- Or use `--all-projects` flag to scan your entire home directory
 
-# 2. 给脚本添加执行权限
-chmod +x *.sh
+**"API Token missing after restore"**
+- This is intentional! Run: `export ANTHROPIC_AUTH_TOKEN=your_token_here`
+- Or add to your `~/.zshrc` or `~/.bashrc`
 
-# 3. 运行恢复脚本
-./restore.sh
-# 按提示输入 API Token
+**Permission denied errors**
+- Make sure Claude Code config directory is writable
+- Check file permissions: `ls -la ~/.claude/`
 
-# 4. (可选) 恢复插件缓存
-./cache-plugin.sh restore
-```
+## Contributing
 
-## 脚本说明
+Contributions welcome! Please see [DEVELOPMENT.md](docs/DEVELOPMENT.md) for details.
 
-### backup.sh - 自动备份
+## License
 
-备份配置文件到 Git（不含插件缓存）：
+MIT License - see [LICENSE](LICENSE) for details.
 
-```bash
-./backup.sh
-```
+## Links
 
-**功能：**
-- 移除 API Token 后备份 `settings.json`
-- 复制自定义命令和技能
-- 扫描并备份所有项目配置
-- 自动 Git commit
-
-### restore.sh - 恢复配置
-
-从 Git 恢复配置到新电脑：
-
-```bash
-./restore.sh
-```
-
-**功能：**
-- Git pull 最新配置
-- 提示输入 API Token
-- 恢复所有配置文件
-- 可选恢复插件缓存
-
-### cache-plugin.sh - 插件缓存管理
-
-手动管理插件缓存（大文件）：
-
-```bash
-# 备份插件缓存
-./cache-plugin.sh backup
-
-# 恢复插件缓存
-./cache-plugin.sh restore
-
-# 清理缓存文件
-./cache-plugin.sh clean
-```
-
-## 日常使用
-
-### 修改配置后
-
-```bash
-# 自动备份并提交
-./backup.sh
-git push
-```
-
-### 更新插件后
-
-```bash
-# 手动打包插件缓存
-./cache-plugin.sh backup
-
-# 提交到 Git（cache 目录已被 .gitignore 排除）
-git add cache/
-git commit -m "update plugins cache"
-git push
-```
-
-### 新电脑同步
-
-```bash
-cd ~/cc-config
-git pull
-./restore.sh
-```
-
-## 配置说明
-
-### settings.json
-
-全局配置文件，备份时自动移除：
-- `ANTHROPIC_AUTH_TOKEN` - API Token（敏感信息）
-
-其他保留的配置：
-- 启用的插件
-- 模型配置
-- 其他环境变量
-
-### project-configs/
-
-自动收集项目配置，扫描路径：
-- `~/Places/work/`
-- `~/Places/personal/`
-- `~/work/`
-- `~/projects/`
-- `~/dev/`
-
-### API Token
-
-由于安全考虑，API Token 不纳入版本控制。恢复时需手动输入：
-
-```bash
-./restore.sh
-# 提示: 请输入 Anthropic API Token
-```
-
-## 注意事项
-
-1. **API Token 安全**：秘钥需自行维护，不进 Git
-2. **插件缓存**：文件较大（~1MB），手动管理
-3. **项目配置**：自动扫描常见目录，手动添加其他路径需修改脚本
-4. **jq 依赖**：建议安装 `jq` 用于 JSON 处理
-
-## 依赖
-
-- **jq**：JSON 处理工具（推荐）
-  ```bash
-  brew install jq  # macOS
-  ```
-
-## 许可
-
-MIT
+- [Documentation](https://ccconfig.dev)
+- [GitHub](https://github.com/jiangtao/ccconfig)
+- [Releases](https://github.com/jiangtao/ccconfig/releases)
