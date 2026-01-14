@@ -107,8 +107,8 @@ ccconfig backup --projects ~/work/project1 --projects ~/projects/project2
 # Auto-discover ALL Claude projects on your system
 ccconfig backup --all-projects
 
-# Backup only settings (skip commands, skills, projects)
-ccconfig backup --no-commands --no-skills --no-projects
+# Backup only settings (skip commands, skills)
+ccconfig backup --no-commands --no-skills
 
 # Use Chinese interface
 ccconfig backup --lang zh
@@ -196,7 +196,9 @@ backup:
 
 ### GitHub Actions Auto-Restore
 
-Set up automatic restore when configuration changes:
+> **Coming Soon**: GitHub Actions integration will allow automatic restore when configuration changes.
+
+This will enable workflows like:
 
 ```yaml
 # .github/workflows/restore.yml
