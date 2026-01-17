@@ -42,7 +42,9 @@ var cacheBackupCmd = &cobra.Command{
 			}
 			return err
 		}
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Success(i18n.T("cache.backup.done", nil))
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Println(ui.Yellow, i18n.T("cache.backup.hint", nil))
 		return nil
 	},
@@ -61,6 +63,7 @@ var cacheRestoreCmd = &cobra.Command{
 			}
 			return err
 		}
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Success(i18n.T("cache.restore.done", nil))
 		return nil
 	},

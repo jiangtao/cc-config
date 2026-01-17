@@ -20,12 +20,14 @@ func NewCommandsRestore() *CommandsRestore {
 
 // Restore restores custom commands
 func (cr *CommandsRestore) Restore(configDir, claudeDir string) error {
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Cyan, i18n.T("restore.steps.commands", nil))
 
 	srcDir := filepath.Join(configDir, "commands")
 	dstDir := filepath.Join(claudeDir, "commands")
 
 	if _, err := os.Stat(srcDir); os.IsNotExist(err) {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Warning(i18n.T("backup.warnings.not_found", map[string]interface{}{
 			"Item": "commands directory",
 		}))
@@ -54,6 +56,7 @@ func (cr *CommandsRestore) Restore(configDir, claudeDir string) error {
 		count++
 	}
 
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Success(i18n.T("restore.messages.restored", map[string]interface{}{
 		"Item": fmt.Sprintf("%d commands", count),
 	}))
@@ -70,12 +73,14 @@ func NewSkillsRestore() *SkillsRestore {
 
 // Restore restores custom skills
 func (sr *SkillsRestore) Restore(configDir, claudeDir string) error {
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Cyan, i18n.T("restore.steps.skills", nil))
 
 	srcDir := filepath.Join(configDir, "skills")
 	dstDir := filepath.Join(claudeDir, "skills")
 
 	if _, err := os.Stat(srcDir); os.IsNotExist(err) {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Warning(i18n.T("backup.warnings.not_found", map[string]interface{}{
 			"Item": "skills directory",
 		}))
@@ -104,6 +109,7 @@ func (sr *SkillsRestore) Restore(configDir, claudeDir string) error {
 		count++
 	}
 
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Success(i18n.T("restore.messages.restored", map[string]interface{}{
 		"Item": fmt.Sprintf("%d skills", count),
 	}))

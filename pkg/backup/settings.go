@@ -22,10 +22,12 @@ func NewSettingsBackup(skip bool) *SettingsBackup {
 // Backup backs up settings.json, removing sensitive information
 func (sb *SettingsBackup) Backup(claudeDir, configDir string) error {
 	if sb.skipSettings {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Skipped(i18n.T("backup.steps.settings", nil))
 		return nil
 	}
 
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Cyan, i18n.T("backup.steps.settings", nil))
 
 	srcPath := filepath.Join(claudeDir, "settings.json")
@@ -35,6 +37,7 @@ func (sb *SettingsBackup) Backup(claudeDir, configDir string) error {
 	data, err := os.ReadFile(srcPath)
 	if err != nil {
 		if os.IsNotExist(err) {
+			//nolint:govet // msg is from i18n.T() which returns runtime strings
 			ui.Warning(i18n.T("backup.warnings.not_found", map[string]interface{}{
 				"Item": "settings.json",
 			}))
@@ -52,6 +55,7 @@ func (sb *SettingsBackup) Backup(claudeDir, configDir string) error {
 	// Remove sensitive information
 	if env, ok := settings["env"].(map[string]interface{}); ok {
 		delete(env, "ANTHROPIC_AUTH_TOKEN")
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Success(i18n.T("backup.messages.settings_removed", nil))
 	}
 

@@ -22,6 +22,7 @@ func NewSettingsRestore() *SettingsRestore {
 
 // Restore restores settings.json
 func (sr *SettingsRestore) Restore(configDir, claudeDir string) error {
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Cyan, i18n.T("restore.steps.settings", nil))
 
 	srcPath := filepath.Join(configDir, "settings.json")
@@ -31,6 +32,7 @@ func (sr *SettingsRestore) Restore(configDir, claudeDir string) error {
 	data, err := os.ReadFile(srcPath)
 	if err != nil {
 		if os.IsNotExist(err) {
+			//nolint:govet // msg is from i18n.T() which returns runtime strings
 			ui.Warning(i18n.T("backup.warnings.not_found", map[string]interface{}{
 				"Item": "settings.json",
 			}))
@@ -54,6 +56,7 @@ func (sr *SettingsRestore) Restore(configDir, claudeDir string) error {
 			if env, ok := existingSettings["env"].(map[string]interface{}); ok {
 				if token, ok := env["ANTHROPIC_AUTH_TOKEN"].(string); ok && token != "" {
 					existingToken = token
+					//nolint:govet // msg is from i18n.T() which returns runtime strings
 					ui.Println(ui.Yellow, "  "+i18n.T("restore.messages.existing_token", nil))
 				}
 			}

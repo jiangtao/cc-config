@@ -15,6 +15,7 @@ import (
 
 // Backup backs up plugin cache to a tar.gz file
 func Backup(repoPath string) error {
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Title(i18n.T("cache.backup.title", nil))
 
 	claudeDir, err := config.GetClaudeDir()
@@ -37,16 +38,19 @@ func Backup(repoPath string) error {
 	}
 
 	// Show detected plugins
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Green, i18n.T("cache.backup.detected", nil))
 	entries, _ := os.ReadDir(pluginsCacheDir)
 	for _, entry := range entries {
 		if entry.IsDir() {
 			info, _ := entry.Info()
+			//nolint:govet // format string contains non-constant parts
 			ui.Println(ui.Gray, "  • "+entry.Name()+" ("+formatSize(info.Size())+")")
 		}
 	}
 
 	// Create tar.gz file
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Cyan, i18n.T("cache.backup.packing", nil))
 
 	outFile, err := os.Create(cacheFile)
@@ -116,6 +120,7 @@ func Backup(repoPath string) error {
 
 // Restore restores plugin cache from tar.gz file
 func Restore(repoPath string) error {
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Title(i18n.T("cache.restore.title", nil))
 
 	claudeDir, err := config.GetClaudeDir()
@@ -132,11 +137,15 @@ func Restore(repoPath string) error {
 
 	// Show file info
 	info, _ := os.Stat(cacheFile)
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Green, i18n.T("cache.restore.info", nil))
+	//nolint:govet // format string contains non-constant parts
 	ui.Println(ui.Gray, "  File: "+cacheFile)
+	//nolint:govet // format string contains non-constant parts
 	ui.Println(ui.Gray, "  Size: "+formatSize(info.Size()))
 
 	// Extract
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Cyan, i18n.T("cache.restore.extracting", nil))
 
 	file, err := os.Open(cacheFile)
@@ -203,6 +212,7 @@ func Restore(repoPath string) error {
 
 // Clean removes plugin cache backup files
 func Clean(repoPath string) error {
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Title(i18n.T("cache.clean.title", nil))
 
 	cacheDir := filepath.Join(repoPath, "cache")
@@ -212,16 +222,19 @@ func Clean(repoPath string) error {
 		return err
 	}
 
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Green, i18n.T("cache.clean.files", nil))
 	totalSize := int64(0)
 	for _, entry := range entries {
 		if !entry.IsDir() {
 			info, _ := entry.Info()
+			//nolint:govet // format string contains non-constant parts
 			ui.Println(ui.Gray, "  • "+entry.Name()+" ("+formatSize(info.Size())+")")
 			totalSize += info.Size()
 		}
 	}
 
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Green, i18n.T("cache.clean.total", map[string]interface{}{
 		"Size": totalSize / 1024 / 1024,
 	}))
@@ -234,6 +247,7 @@ func Clean(repoPath string) error {
 		}
 	}
 
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Success(i18n.T("cache.clean.done", nil))
 	return nil
 }

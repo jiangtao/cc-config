@@ -36,6 +36,7 @@ func init() {
 }
 
 func runRestore(cmd *cobra.Command, args []string) error {
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Title(i18n.T("restore.title", nil))
 
 	if restoreDryRun {
@@ -69,8 +70,10 @@ func runRestore(cmd *cobra.Command, args []string) error {
 
 	// Step 1: Git pull
 	if restoreNoPull {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Skipped(i18n.T("restore.steps.update", nil))
 	} else {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Println(ui.Cyan, i18n.T("restore.steps.update", nil))
 		isGit, _ := git.IsGitRepo(expandedRepo)
 		if !isGit {
@@ -85,6 +88,7 @@ func runRestore(cmd *cobra.Command, args []string) error {
 	}
 
 	// Step 2: Create Claude directories
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Cyan, i18n.T("restore.steps.create_dirs", nil))
 	if !restoreDryRun {
 		for _, dir := range []string{"commands", "skills", "plugins"} {
@@ -121,6 +125,7 @@ func runRestore(cmd *cobra.Command, args []string) error {
 
 	// Step 6: Restore cache
 	if restoreCache {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Println(ui.Cyan, i18n.T("restore.steps.cache", nil))
 		cacheFile := filepath.Join(expandedRepo, "cache", "plugins-cache.tar.gz")
 		if _, err := os.Stat(cacheFile); os.IsNotExist(err) {

@@ -43,6 +43,7 @@ func init() {
 }
 
 func runBackup(cmd *cobra.Command, args []string) error {
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Title(i18n.T("backup.title", nil))
 
 	// Get paths
@@ -96,6 +97,7 @@ func runBackup(cmd *cobra.Command, args []string) error {
 
 	// Step 5: Git commit
 	if !backupNoCommit {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Println(ui.Cyan, i18n.T("backup.steps.commit", nil))
 
 		// Check if it's a git repo
@@ -106,6 +108,7 @@ func runBackup(cmd *cobra.Command, args []string) error {
 			// Check for changes
 			hasChanges, _ := git.HasChanges(expandedRepo)
 			if !hasChanges {
+				//nolint:govet // msg is from i18n.T() which returns runtime strings
 				ui.Warning(i18n.T("backup.messages.no_changes", nil))
 			} else {
 				// Add and commit
@@ -116,6 +119,7 @@ func runBackup(cmd *cobra.Command, args []string) error {
 					if err := git.Commit(expandedRepo, commitMsg); err != nil {
 						ui.Error("git commit failed: %v", err)
 					} else {
+						//nolint:govet // msg is from i18n.T() which returns runtime strings
 						ui.Success(i18n.T("backup.messages.committed", nil))
 						ui.Println(ui.Yellow, "  Tip: Run 'git push' to push to remote")
 					}

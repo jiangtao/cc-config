@@ -27,10 +27,12 @@ func NewProjectsBackup(projects []string, scanAll bool) *ProjectsBackup {
 // Backup backs up project configurations
 func (pb *ProjectsBackup) Backup(configDir string) error {
 	if len(pb.projects) == 0 && !pb.scanAll {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Skipped(i18n.T("backup.steps.projects", nil))
 		return nil
 	}
 
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Cyan, i18n.T("backup.steps.projects", nil))
 
 	// Collect directories to scan
@@ -56,10 +58,12 @@ func (pb *ProjectsBackup) Backup(configDir string) error {
 	}
 
 	if count == 0 {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Warning(i18n.T("backup.warnings.not_found", map[string]interface{}{
 			"Item": "project configurations",
 		}))
 	} else {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Success(i18n.T("backup.messages.projects_count", map[string]interface{}{
 			"Count": count,
 		}))
@@ -94,6 +98,7 @@ func (pb *ProjectsBackup) scanDirectory(baseDir, configDir string) (int, error) 
 
 			if err := pb.backupProject(path, projectName, configDir); err == nil {
 				count++
+				//nolint:govet // format string contains non-constant parts
 				ui.Println(ui.Gray, "  ✓ "+projectName)
 			}
 			// Don't descend into .claude directory

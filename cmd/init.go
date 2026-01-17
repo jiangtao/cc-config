@@ -35,6 +35,7 @@ func init() {
 }
 
 func runInit(cmd *cobra.Command, args []string) error {
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Title(i18n.T("init.title", nil))
 
 	reader := bufio.NewReader(os.Stdin)
@@ -65,6 +66,7 @@ func runInit(cmd *cobra.Command, args []string) error {
 		if err := os.MkdirAll(expandedRepo, 0755); err != nil {
 			return fmt.Errorf("failed to create repository: %w", err)
 		}
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Success(i18n.T("init.messages.created", nil))
 	}
 
@@ -88,6 +90,7 @@ func runInit(cmd *cobra.Command, args []string) error {
 				if err := git.Init(expandedRepo); err != nil {
 					return fmt.Errorf("git init failed: %w", err)
 				}
+				//nolint:govet // msg is from i18n.T() which returns runtime strings
 				ui.Success(i18n.T("init.messages.git_initialized", nil))
 			}
 

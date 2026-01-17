@@ -61,10 +61,12 @@ func NewCommandsBackup(skip bool) *CommandsBackup {
 // Backup backs up custom commands
 func (cb *CommandsBackup) Backup(claudeDir, configDir string) error {
 	if cb.skipCommands {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Skipped(i18n.T("backup.steps.commands", nil))
 		return nil
 	}
 
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Cyan, i18n.T("backup.steps.commands", nil))
 
 	srcDir := filepath.Join(claudeDir, "commands")
@@ -72,6 +74,7 @@ func (cb *CommandsBackup) Backup(claudeDir, configDir string) error {
 
 	// Check if source directory exists
 	if _, err := os.Stat(srcDir); os.IsNotExist(err) {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Warning(i18n.T("backup.warnings.not_found", map[string]interface{}{
 			"Item": "commands directory",
 		}))
@@ -104,6 +107,7 @@ func (cb *CommandsBackup) Backup(claudeDir, configDir string) error {
 		count++
 	}
 
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Success(i18n.T("backup.messages.commands_count", map[string]interface{}{
 		"Count": count,
 	}))

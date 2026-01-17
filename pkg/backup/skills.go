@@ -22,10 +22,12 @@ func NewSkillsBackup(skip bool) *SkillsBackup {
 // Backup backs up custom skills
 func (skb *SkillsBackup) Backup(claudeDir, configDir string) error {
 	if skb.skipSkills {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Skipped(i18n.T("backup.steps.skills", nil))
 		return nil
 	}
 
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Println(ui.Cyan, i18n.T("backup.steps.skills", nil))
 
 	srcDir := filepath.Join(claudeDir, "skills")
@@ -33,6 +35,7 @@ func (skb *SkillsBackup) Backup(claudeDir, configDir string) error {
 
 	// Check if source directory exists
 	if _, err := os.Stat(srcDir); os.IsNotExist(err) {
+		//nolint:govet // msg is from i18n.T() which returns runtime strings
 		ui.Warning(i18n.T("backup.warnings.not_found", map[string]interface{}{
 			"Item": "skills directory",
 		}))
@@ -65,6 +68,7 @@ func (skb *SkillsBackup) Backup(claudeDir, configDir string) error {
 		count++
 	}
 
+	//nolint:govet // msg is from i18n.T() which returns runtime strings
 	ui.Success(i18n.T("backup.messages.skills_count", map[string]interface{}{
 		"Count": count,
 	}))
