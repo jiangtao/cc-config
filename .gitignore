@@ -31,7 +31,6 @@ dist/
 *.log
 .pnpm-debug.log*
 *.tgz
-pnpm-lock.yaml
 
 # Web landing page
 web/node_modules/
