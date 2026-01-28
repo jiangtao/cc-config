@@ -11,7 +11,7 @@ git remote add origin git@github.com:YOURUSERNAME/cc-config.git`,
     {
       title: "2. Backup your configurations",
       description: "Backup all your Claude Code settings, commands, and skills",
-      code: `cconf backup --repo ~/cc-config`,
+      code: `cc-conf backup --repo ~/cc-config`,
     },
     {
       title: "3. Push to GitHub",
@@ -24,29 +24,29 @@ git push -u origin main`,
       title: "4. On new computer, restore",
       description: "Clone and restore your configurations on any machine",
       code: `git clone git@github.com:YOURUSERNAME/cc-config.git ~/cc-config
-cconf restore --repo ~/cc-config`,
+cc-conf restore --repo ~/cc-config`,
     },
   ]
 
   const commonCommands = [
     {
-      command: "cconf backup",
+      command: "cc-conf backup",
       description: "Backup all configurations",
     },
     {
-      command: "cconf backup --all-projects",
+      command: "cc-conf backup --all-projects",
       description: "Backup with auto-discovery of all projects",
     },
     {
-      command: "cconf restore",
+      command: "cc-conf restore",
       description: "Restore configurations from repo",
     },
     {
-      command: "cconf restore --dry-run",
+      command: "cc-conf restore --dry-run",
       description: "Preview changes without applying",
     },
     {
-      command: "cconf cache backup",
+      command: "cc-conf cache backup",
       description: "Backup plugin caches (large files)",
     },
   ]

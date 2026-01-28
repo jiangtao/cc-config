@@ -67,12 +67,12 @@ export function getClaudeDir(): string {
  * Load configuration from file
  */
 async function loadConfigFile(): Promise<Partial<Config>> {
-  const explorer = cosmiconfig('cconf', {
+  const explorer = cosmiconfig('cc-conf', {
     searchPlaces: [
-      '.cconfrc.yaml',
-      '.cconfrc.yml',
-      '.cconfrc.json',
-      '.cconfrc',
+      '.cc-conf.yaml',
+      '.cc-conf.yml',
+      '.cc-conf.json',
+      '.cc-confrc',
       'package.json',
     ],
   });

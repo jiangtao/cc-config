@@ -14,7 +14,7 @@ export function Hero() {
       <div className="mx-auto max-w-3xl">
         <div className="mb-6 flex justify-center">
           <code className="rounded-lg bg-slate-100 px-4 py-2 text-sm font-mono">
-            cconf
+            cc-conf
           </code>
         </div>
         <h1 className="mb-6 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl md:text-5xl lg:text-6xl">
@@ -32,7 +32,7 @@ export function Hero() {
           </Button>
           <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
             <a
-              href="https://github.com/jiangtao/cconf"
+              href="https://github.com/jiangtao/cc-conf"
               target="_blank"
               rel="noopener noreferrer"
             >

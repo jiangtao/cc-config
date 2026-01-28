@@ -1,4 +1,4 @@
-# cconf
+# cc-conf
 
 > **用一条命令在所有电脑间同步你的 Claude Code 配置**
 
@@ -7,9 +7,9 @@
 
 ---
 
-## 什么是 cconf？
+## 什么是 cc-conf？
 
-**cconf** 是一个简单的工具，可以将你的 Claude Code 配置备份到 GitHub 并随时恢复。
+**cc-conf** 是一个简单的工具，可以将你的 Claude Code 配置备份到 GitHub 并随时恢复。
 
 **为什么需要它？**
 
@@ -34,14 +34,14 @@ curl -fsSL https://jiangtao.vercel.app/install.sh | bash
 
 ```bash
 # macOS 系统
-curl -L https://github.com/jiangtao/cc-config/releases/latest/download/cconf-darwin-arm64 -o cconf
-chmod +x cconf
-sudo mv cconf /usr/local/bin/
+curl -L https://github.com/jiangtao/cc-config/releases/latest/download/cc-conf-darwin-arm64 -o cc-conf
+chmod +x cc-conf
+sudo mv cc-conf /usr/local/bin/
 
 # Linux 系统
-curl -L https://github.com/jiangtao/cc-config/releases/latest/download/cconf-linux-amd64 -o cconf
-chmod +x cconf
-sudo mv cconf /usr/local/bin/
+curl -L https://github.com/jiangtao/cc-config/releases/latest/download/cc-conf-linux-amd64 -o cc-conf
+chmod +x cc-conf
+sudo mv cc-conf /usr/local/bin/
 ```
 
 ---
@@ -60,7 +60,7 @@ git init
 git remote add origin git@github.com:YOURUSERNAME/cc-config.git
 
 # 3. 备份所有配置！
-cconf backup --repo ~/cc-config
+cc-conf backup --repo ~/cc-config
 
 # 4. 推送到 GitHub
 git add .
@@ -75,7 +75,7 @@ git push -u origin main
 git clone git@github.com:YOURUSERNAME/cc-config.git ~/cc-config
 
 # 2. 恢复所有配置！
-cconf restore --repo ~/cc-config
+cc-conf restore --repo ~/cc-config
 ```
 
 就这么简单！
@@ -101,30 +101,30 @@ cconf restore --repo ~/cc-config
 
 ```bash
 # 简单备份
-cconf backup --repo ~/cc-config
+cc-conf backup --repo ~/cc-config
 
 # 备份并预览（查看将备份什么）
-cconf backup --repo ~/cc-config --dry-run
+cc-conf backup --repo ~/cc-config --dry-run
 
 # 自动查找所有 Claude 项目
-cconf backup --all-projects
+cc-conf backup --all-projects
 ```
 
 ### 恢复
 
 ```bash
 # 简单恢复
-cconf restore --repo ~/cc-config
+cc-conf restore --repo ~/cc-config
 
 # 预览更改但不应用
-cconf restore --repo ~/cc-config --dry-run
+cc-conf restore --repo ~/cc-config --dry-run
 ```
 
 ---
 
 ## 可选：配置文件
 
-创建 `~/.cconf.yaml` 来保存你的偏好设置：
+创建 `~/.cc-conf.yaml` 来保存你的偏好设置：
 
 ```yaml
 # 你的配置存放位置
@@ -155,10 +155,10 @@ git:
 
 ### 问：如果没有 GitHub 账号怎么办？
 
-**答：** 你仍然可以使用 cconf！只需使用本地文件夹：
+**答：** 你仍然可以使用 cc-conf！只需使用本地文件夹：
 
 ```bash
-cconf backup --repo ~/Documents/my-claude-configs
+cc-conf backup --repo ~/Documents/my-claude-configs
 ```
 
 ### 问：应该多久备份一次？
@@ -167,7 +167,7 @@ cconf backup --repo ~/Documents/my-claude-configs
 
 ```bash
 # 创建新命令或技能后
-cconf backup
+cc-conf backup
 ```
 
 或者设置 cron 自动备份：
@@ -177,7 +177,7 @@ cconf backup
 crontab -e
 
 # 添加这一行每天下午 6 点备份
-0 18 * * * /usr/local/bin/cconf backup --repo ~/cc-config
+0 18 * * * /usr/local/bin/cc-conf backup --repo ~/cc-config
 ```
 
 ### 问：我可以只备份部分项目吗？
@@ -185,7 +185,7 @@ crontab -e
 **答：可以！** 指定要包含的项目：
 
 ```bash
-cconf backup --projects ~/work/project1 --projects ~/work/project2
+cc-conf backup --projects ~/work/project1 --projects ~/work/project2
 ```
 
 ---

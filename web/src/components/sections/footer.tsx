@@ -18,7 +18,7 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-4 sm:gap-6">
             <a
-              href="https://github.com/jiangtao/cconf"
+              href="https://github.com/jiangtao/cc-conf"
               className="flex items-center gap-2 hover:text-white"
               target="_blank"
               rel="noopener noreferrer"
@@ -27,7 +27,7 @@ export function Footer() {
               <span className="text-sm">{t.footer.github}</span>
             </a>
             <a
-              href={`https://github.com/jiangtao/cconf/blob/main/README${language === 'zh' ? '-zh' : ''}.md`}
+              href={`https://github.com/jiangtao/cc-conf/blob/main/README${language === 'zh' ? '-zh' : ''}.md`}
               className="text-sm hover:text-white"
               target="_blank"
               rel="noopener noreferrer"

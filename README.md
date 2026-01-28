@@ -1,4 +1,4 @@
-# cconf
+# cc-conf
 
 > **Sync your Claude Code settings across all your computers with one command**
 
@@ -7,9 +7,9 @@
 
 ---
 
-## What is cconf?
+## What is cc-conf?
 
-**cconf** is a simple tool that backs up and restores your Claude Code configurations to GitHub.
+**cc-conf** is a simple tool that backs up and restores your Claude Code configurations to GitHub.
 
 **Why do you need it?**
 
@@ -34,14 +34,14 @@ curl -fsSL https://jiangtao.vercel.app/install.sh | bash
 
 ```bash
 # For macOS
-curl -L https://github.com/jiangtao/cc-config/releases/latest/download/cconf-darwin-arm64 -o cconf
-chmod +x cconf
-sudo mv cconf /usr/local/bin/
+curl -L https://github.com/jiangtao/cc-config/releases/latest/download/cc-conf-darwin-arm64 -o cc-conf
+chmod +x cc-conf
+sudo mv cc-conf /usr/local/bin/
 
 # For Linux
-curl -L https://github.com/jiangtao/cc-config/releases/latest/download/cconf-linux-amd64 -o cconf
-chmod +x cconf
-sudo mv cconf /usr/local/bin/
+curl -L https://github.com/jiangtao/cc-config/releases/latest/download/cc-conf-linux-amd64 -o cc-conf
+chmod +x cc-conf
+sudo mv cc-conf /usr/local/bin/
 ```
 
 ---
@@ -60,7 +60,7 @@ git init
 git remote add origin git@github.com:YOURUSERNAME/cc-config.git
 
 # 3. Backup everything!
-cconf backup --repo ~/cc-config
+cc-conf backup --repo ~/cc-config
 
 # 4. Push to GitHub
 git add .
@@ -75,7 +75,7 @@ git push -u origin main
 git clone git@github.com:YOURUSERNAME/cc-config.git ~/cc-config
 
 # 2. Restore everything!
-cconf restore --repo ~/cc-config
+cc-conf restore --repo ~/cc-config
 ```
 
 That's it!
@@ -101,30 +101,30 @@ That's it!
 
 ```bash
 # Simple backup
-cconf backup --repo ~/cc-config
+cc-conf backup --repo ~/cc-config
 
 # Backup with preview
-cconf backup --repo ~/cc-config --dry-run
+cc-conf backup --repo ~/cc-config --dry-run
 
 # Find ALL Claude projects automatically
-cconf backup --all-projects
+cc-conf backup --all-projects
 ```
 
 ### Restore
 
 ```bash
 # Simple restore
-cconf restore --repo ~/cc-config
+cc-conf restore --repo ~/cc-config
 
 # Preview changes without applying
-cconf restore --repo ~/cc-config --dry-run
+cc-conf restore --repo ~/cc-config --dry-run
 ```
 
 ---
 
 ## Optional: Configuration File
 
-Create `~/.cconfrc.yaml` to save your preferences:
+Create `~/.cc-confrc.yaml` to save your preferences:
 
 ```yaml
 # Where your configs are stored
@@ -155,10 +155,10 @@ git:
 
 ### Q: What if I don't have a GitHub account?
 
-**A:** You can still use cconf! Just use a local folder:
+**A:** You can still use cc-conf! Just use a local folder:
 
 ```bash
-cconf backup --repo ~/Documents/my-claude-configs
+cc-conf backup --repo ~/Documents/my-claude-configs
 ```
 
 ### Q: How often should I backup?
@@ -167,7 +167,7 @@ cconf backup --repo ~/Documents/my-claude-configs
 
 ```bash
 # After creating new commands or skills
-cconf backup
+cc-conf backup
 ```
 
 Or set up automatic backups with cron:
@@ -177,7 +177,7 @@ Or set up automatic backups with cron:
 crontab -e
 
 # Add this line to backup daily at 6 PM
-0 18 * * * /usr/local/bin/cconf backup --repo ~/cc-config
+0 18 * * * /usr/local/bin/cc-conf backup --repo ~/cc-config
 ```
 
 ### Q: Can I backup just some projects?
@@ -185,7 +185,7 @@ crontab -e
 **A:** Yes! Specify which projects to include:
 
 ```bash
-cconf backup --projects ~/work/project1 --projects ~/work/project2
+cc-conf backup --projects ~/work/project1 --projects ~/work/project2
 ```
 
 ---
