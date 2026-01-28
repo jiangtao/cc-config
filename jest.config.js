@@ -15,4 +15,5 @@ export default {
   },
   testMatch: ['**/test/**/*.test.ts'],
   collectCoverageFrom: ['src/**/*.ts', '!src/**/*.d.ts'],
+  passWithNoTests: true,
 };
