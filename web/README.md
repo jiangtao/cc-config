@@ -1,6 +1,6 @@
-# ccconfig Landing Page
+# cconf Landing Page
 
-This is the official website for ccconfig.
+This is the official website for cconf.
 
 ---
 

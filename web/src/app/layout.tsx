@@ -7,7 +7,7 @@ import { LanguageToggle } from "@/components/language-toggle"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "ccconfig - Claude Code Configuration Sync",
+  title: "cconf - Claude Code Configuration Sync",
   description:
     "Backup and restore your Claude Code settings, commands, skills, and project configs across all your machines.",
 }

@@ -1,21 +1,29 @@
 {
-  "name": "ccconfig",
+  "name": "cconf",
   "version": "0.1.0",
-  "description": "Claude Code configuration backup/restore tool",
+  "description": "Claude Code Config - backup/restore tool",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "ccconfig": "dist/index.js"
+    "cconf": "dist/index.js"
   },
   "exports": "./dist/index.js",
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsc && chmod +x dist/index.js",
+    "build:bundle": "node esbuild.config.js",
+    "build:binary": "node esbuild.config.js && pkg dist/bundle.cjs -t node18-linux-x64,node18-linux-arm64,node18-macos-x64,node18-macos-arm64,node18-win-x64 --output bin/cconf",
     "test": "jest",
     "lint": "eslint src/",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.ts\"",
     "prepublishOnly": "pnpm run build"
+  },
+  "pkg": {
+    "scripts": ["dist/bundle.cjs"],
+    "assets": ["locales/**/*"],
+    "targets": ["node18-linux-x64", "node18-linux-arm64", "node18-macos-x64", "node18-macos-arm64", "node18-win-x64"],
+    "outputPath": "bin"
   },
   "keywords": [
     "claude",

@@ -1,10 +1,21 @@
 import { createInstance, i18n, InitOptions } from 'i18next';
 import { resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
 import { getConfig } from './config.js';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+// Get locales directory - works when bundled
+function getLocalesDir(): string {
+  // When bundled with esbuild, __dirname will be set correctly for CJS
+  // For ESM, we need to use import.meta.url
+  try {
+    // @ts-ignore - __dirname may not exist in strict ESM but esbuild will define it
+    if (typeof __dirname !== 'undefined') {
+      return resolve(__dirname, '../../locales');
+    }
+  } catch {}
+  // Fallback for pure ESM
+  return resolve('./locales');
+}
 
 let i18nInstance: i18n | null = null;
 
@@ -56,11 +67,12 @@ export async function initI18n(forceLang?: string): Promise<i18n> {
   const langCode = normalizeLang(forceLang || getLanguageCode());
 
   // Read JSON files directly
+  const localesDir = getLocalesDir();
   const enTranslations = JSON.parse(
-    readFileSync(resolve(__dirname, '../../locales/en.json'), 'utf-8')
+    readFileSync(resolve(localesDir, 'en.json'), 'utf-8')
   );
   const zhTranslations = JSON.parse(
-    readFileSync(resolve(__dirname, '../../locales/zh.json'), 'utf-8')
+    readFileSync(resolve(localesDir, 'zh.json'), 'utf-8')
   );
 
   const options: InitOptions = {

@@ -1,6 +1,6 @@
-# ccconfig 着陆页
+# cconf 着陆页
 
-这是 ccconfig 的官方网站。
+这是 cconf 的官方网站。
 
 ---
 

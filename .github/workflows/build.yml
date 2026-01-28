@@ -42,22 +42,9 @@ jobs:
         run: pnpm test
 
   build:
-    name: Build
+    name: Build Binary
     needs: [test]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - os: macos-latest
-            arch: x64
-          - os: macos-latest
-            arch: arm64
-          - os: ubuntu-latest
-            arch: x64
-          - os: ubuntu-latest
-            arch: arm64
-          - os: windows-latest
-            arch: x64
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -76,33 +63,28 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build
-        run: pnpm run build
+      - name: Build bundle for pkg
+        run: pnpm run build:bundle
 
-      - name: Package binary (Unix)
-        if: runner.os != 'Windows'
+      - name: Package binaries with pkg
         run: |
-          cp dist/index.js ccconfig-${{ matrix.os }}-${{ matrix.arch }}
-          chmod +x ccconfig-${{ matrix.os }}-${{ matrix.arch }}
+          pnpm pkg dist/bundle.cjs -t node18-linux-x64,node18-linux-arm64,node18-macos-x64,node18-macos-arm64,node18-win-x64 --output bin/cconf
 
-      - name: Package binary (Windows)
-        if: runner.os == 'Windows'
+      - name: Rename binaries for upload
         run: |
-          Copy-Item dist/index.js ccconfig-${{ matrix.os }}-${{ matrix.arch }}.exe
+          cd bin
+          mv cconf-linux-x64 cconf-linux-amd64
+          mv cconf-linux-arm64 cconf-linux-arm64
+          mv cconf-macos-x64 cconf-darwin-amd64
+          mv cconf-macos-arm64 cconf-darwin-arm64
+          mv cconf-win-x64.exe cconf-windows-amd64.exe
 
-      - name: Upload artifact (Unix)
-        if: runner.os != 'Windows'
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ccconfig-${{ matrix.os }}-${{ matrix.arch }}
-          path: ccconfig-${{ matrix.os }}-${{ matrix.arch }}
-
-      - name: Upload artifact (Windows)
-        if: runner.os == 'Windows'
-        uses: actions/upload-artifact@v4
-        with:
-          name: ccconfig-${{ matrix.os }}-${{ matrix.arch }}
-          path: ccconfig-${{ matrix.os }}-${{ matrix.arch }}.exe
+          name: cconf-binaries
+          path: |
+            bin/cconf-*
 
   release:
     name: Release
@@ -115,40 +97,39 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download all artifacts
+      - name: Download binaries
         uses: actions/download-artifact@v4
         with:
-          path: artifacts
+          name: cconf-binaries
+          path: binaries
 
-      - name: Create archives
+      - name: Create release archives
         run: |
-          cd artifacts
-          for dir in */; do
-            cd "$$dir"
-            if [[ -f ccconfig.exe ]]; then
-              zip ../ccconfig-$${dir#ccconfig-}.zip ccconfig.exe
+          cd binaries
+          for bin in cconf-*; do
+            if [[ "$bin" == *".exe" ]]; then
+              zip "$bin.zip" "$bin"
             else
-              tar czf ../ccconfig-$${dir#ccconfig-}.tar.gz ccconfig
+              tar czf "$bin.tar.gz" "$bin"
             fi
-            cd ..
           done
 
       - name: Generate checksums
         run: |
-          cd artifacts
+          cd binaries
           sha256sum *.{tar.gz,zip} > checksums.txt
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: artifacts/*
+          files: binaries/*
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   npm-publish:
     name: npm publish
-    needs: [test, build]
+    needs: [test]
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     permissions:
@@ -177,5 +158,5 @@ jobs:
 
       - name: Publish to npm
         run: pnpm publish --no-git-checks --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

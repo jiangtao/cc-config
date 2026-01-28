@@ -18,15 +18,21 @@ jobs:
           repository: jiangtao/cc-config
           path: ccconfig
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          go-version: '1.21'
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Build ccconfig
+        working-directory: ./ccconfig
         run: |
-          cd ccconfig
-          go build -o ccconfig .
+          pnpm install
+          pnpm run build
 
       - name: Check if config repo exists
         id: check

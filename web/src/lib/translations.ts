@@ -54,7 +54,7 @@ export const translations = {
       commonCommands: 'Common Commands',
     },
     footer: {
-      copyright: '{year} ccconfig. MIT License.',
+      copyright: '{year} cconf. MIT License.',
       github: 'GitHub',
       documentation: 'Documentation',
     },
@@ -114,7 +114,7 @@ export const translations = {
       commonCommands: '常用命令',
     },
     footer: {
-      copyright: '{year} ccconfig. MIT 许可证。',
+      copyright: '{year} cconf. MIT 许可证。',
       github: 'GitHub',
       documentation: '文档',
     },

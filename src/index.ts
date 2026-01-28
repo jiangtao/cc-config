@@ -9,8 +9,8 @@ import { cacheCommand } from './cli/cache.js';
 const program = new Command();
 
 program
-  .name('ccconfig')
-  .description('Claude Code configuration backup/restore tool')
+  .name('cconf')
+  .description('Claude Code Config - backup/restore tool')
   .version('0.1.0');
 
 // Global language option

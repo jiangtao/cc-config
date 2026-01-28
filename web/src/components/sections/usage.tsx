@@ -2,6 +2,7 @@ export function Usage() {
   const quickStart = [
     {
       title: "1. Create your config repository",
+      description: "Create a Git repository to store your Claude Code configurations",
       code: `mkdir -p ~/cc-config
 cd ~/cc-config
 git init
@@ -9,40 +10,43 @@ git remote add origin git@github.com:YOURUSERNAME/cc-config.git`,
     },
     {
       title: "2. Backup your configurations",
-      code: `ccconfig backup --repo ~/cc-config`,
+      description: "Backup all your Claude Code settings, commands, and skills",
+      code: `cconf backup --repo ~/cc-config`,
     },
     {
       title: "3. Push to GitHub",
+      description: "Upload your configurations to GitHub for safekeeping",
       code: `git add .
 git commit -m "Initial backup"
 git push -u origin main`,
     },
     {
       title: "4. On new computer, restore",
+      description: "Clone and restore your configurations on any machine",
       code: `git clone git@github.com:YOURUSERNAME/cc-config.git ~/cc-config
-ccconfig restore --repo ~/cc-config`,
+cconf restore --repo ~/cc-config`,
     },
   ]
 
   const commonCommands = [
     {
-      command: "ccconfig backup",
+      command: "cconf backup",
       description: "Backup all configurations",
     },
     {
-      command: "ccconfig backup --all-projects",
+      command: "cconf backup --all-projects",
       description: "Backup with auto-discovery of all projects",
     },
     {
-      command: "ccconfig restore",
+      command: "cconf restore",
       description: "Restore configurations from repo",
     },
     {
-      command: "ccconfig restore --dry-run",
+      command: "cconf restore --dry-run",
       description: "Preview changes without applying",
     },
     {
-      command: "ccconfig cache backup",
+      command: "cconf cache backup",
       description: "Backup plugin caches (large files)",
     },
   ]
@@ -61,18 +65,28 @@ ccconfig restore --repo ~/cc-config`,
           <h3 className="mb-6 text-center text-xl font-semibold text-slate-900 sm:mb-8 sm:text-2xl">
             Quick Start
           </h3>
-          <div className="mx-auto grid max-w-4xl gap-4 md:grid-cols-2 sm:gap-6">
-            {quickStart.map((step) => (
+          <div className="mx-auto max-w-3xl space-y-6">
+            {quickStart.map((step, index) => (
               <div
                 key={step.title}
-                className="rounded-lg border bg-white p-4 shadow-sm sm:p-6"
+                className="relative rounded-lg border bg-white p-5 shadow-sm sm:p-6"
               >
-                <h4 className="mb-3 font-semibold text-slate-900 text-sm sm:text-base">
-                  {step.title}
-                </h4>
-                <pre className="overflow-x-auto rounded bg-slate-900 p-3 text-xs text-green-400 sm:p-4 sm:text-sm">
-                  <code>{step.code}</code>
-                </pre>
+                <div className="absolute -left-3 -top-3 flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-sm font-bold text-white sm:h-10 sm:w-10 sm:text-base">
+                  {index + 1}
+                </div>
+                <div className="ml-6 sm:ml-8">
+                  <h4 className="mb-2 font-semibold text-slate-900 text-base sm:text-lg">
+                    {step.title}
+                  </h4>
+                  {step.description && (
+                    <p className="mb-4 text-sm text-slate-600">
+                      {step.description}
+                    </p>
+                  )}
+                  <pre className="overflow-x-auto rounded bg-slate-900 p-4 text-xs text-green-400 sm:text-sm">
+                    <code>{step.code}</code>
+                  </pre>
+                </div>
               </div>
             ))}
           </div>
