@@ -82,13 +82,13 @@ jobs:
       - name: Package binary (Unix)
         if: runner.os != 'Windows'
         run: |
-          cp dist/cli.js ccconfig-${{ matrix.os }}-${{ matrix.arch }}
+          cp dist/index.js ccconfig-${{ matrix.os }}-${{ matrix.arch }}
           chmod +x ccconfig-${{ matrix.os }}-${{ matrix.arch }}
 
       - name: Package binary (Windows)
         if: runner.os == 'Windows'
         run: |
-          Copy-Item dist/cli.js ccconfig-${{ matrix.os }}-${{ matrix.arch }}.exe
+          Copy-Item dist/index.js ccconfig-${{ matrix.os }}-${{ matrix.arch }}.exe
 
       - name: Upload artifact (Unix)
         if: runner.os != 'Windows'
