@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-const oneClickInstall = "curl -fsSL https://jiangtao.vercel.app/install.sh | bash"
+const oneClickInstall = "curl -fsSL https://cconf.vercel.app/install.sh | bash"
 
 const installSteps = [
   {
