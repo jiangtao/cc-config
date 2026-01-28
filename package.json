@@ -1,6 +1,6 @@
 {
   "name": "cc-conf",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Claude Code Config - backup/restore tool",
   "type": "module",
   "main": "dist/index.js",
@@ -20,9 +20,19 @@
     "prepublishOnly": "pnpm run build"
   },
   "pkg": {
-    "scripts": ["dist/bundle.cjs"],
-    "assets": ["locales/**/*"],
-    "targets": ["node18-linux-x64", "node18-linux-arm64", "node18-macos-x64", "node18-macos-arm64", "node18-win-x64"],
+    "scripts": [
+      "dist/bundle.cjs"
+    ],
+    "assets": [
+      "locales/**/*"
+    ],
+    "targets": [
+      "node18-linux-x64",
+      "node18-linux-arm64",
+      "node18-macos-x64",
+      "node18-macos-arm64",
+      "node18-win-x64"
+    ],
     "outputPath": "bin"
   },
   "keywords": [
