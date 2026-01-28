@@ -7,15 +7,15 @@ const oneClickInstall = "curl -fsSL https://jiangtao.vercel.app/install.sh | bas
 const installSteps = [
   {
     platform: "macOS (Apple Silicon)",
-    command: "curl -L https://github.com/jiangtao/cc-config/releases/latest/download/cconf-darwin-arm64 -o cconf && chmod +x cconf && sudo mv cconf /usr/local/bin/",
+    command: "curl -L https://github.com/jiangtao/cconf/releases/latest/download/cconf-darwin-arm64 -o cconf && chmod +x cconf && sudo mv cconf /usr/local/bin/",
   },
   {
     platform: "macOS (Intel)",
-    command: "curl -L https://github.com/jiangtao/cc-config/releases/latest/download/cconf-darwin-amd64 -o cconf && chmod +x cconf && sudo mv cconf /usr/local/bin/",
+    command: "curl -L https://github.com/jiangtao/cconf/releases/latest/download/cconf-darwin-amd64 -o cconf && chmod +x cconf && sudo mv cconf /usr/local/bin/",
   },
   {
     platform: "Linux",
-    command: "curl -L https://github.com/jiangtao/cc-config/releases/latest/download/cconf-linux-amd64 -o cconf && chmod +x cconf && sudo mv cconf /usr/local/bin/",
+    command: "curl -L https://github.com/jiangtao/cconf/releases/latest/download/cconf-linux-amd64 -o cconf && chmod +x cconf && sudo mv cconf /usr/local/bin/",
   },
 ]
 
