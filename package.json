@@ -1,6 +1,6 @@
 {
   "name": "cc-conf",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Claude Code Config - backup/restore tool",
   "type": "module",
   "main": "dist/index.js",
