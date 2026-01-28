@@ -41,15 +41,15 @@ export function Installation() {
         </div>
 
         {/* One-Click Install - Highlighted */}
-        <div className="mx-auto mb-8 max-w-3xl sm:mb-10">
+        <div className="mx-auto max-w-3xl">
           <div className="rounded-xl border-2 border-blue-500 bg-gradient-to-r from-blue-50 to-indigo-50 p-4 shadow-lg sm:p-6">
             <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
               <div className="flex items-center gap-2">
                 <span className="rounded-full bg-blue-500 px-3 py-1 text-xs font-semibold text-white whitespace-nowrap">
-                  Recommended
+                  One-Click Install
                 </span>
                 <h3 className="text-base font-bold text-slate-900 sm:text-lg">
-                  One-Click Install
+                  Install cconf
                 </h3>
               </div>
               <button
@@ -66,42 +66,6 @@ export function Installation() {
             </code>
             <p className="mt-3 text-xs text-slate-600 sm:text-sm">
               Auto-detects your platform and installs the latest version.
-            </p>
-          </div>
-        </div>
-
-        {/* Manual Install Options */}
-        <div className="mx-auto max-w-3xl">
-          <div className="space-y-3 sm:space-y-4">
-            {installSteps.map((step) => (
-              <div
-                key={step.platform}
-                className="rounded-lg border bg-slate-50 p-4 sm:p-5"
-              >
-                <div className="mb-3 flex items-center justify-between gap-2">
-                  <h3 className="font-semibold text-slate-900 text-sm sm:text-base">{step.platform}</h3>
-                  <button
-                    type="button"
-                    onClick={() => handleCopy(step.command, step.platform)}
-                    aria-label={`Copy installation command for ${step.platform}`}
-                    className="rounded px-3 py-1 text-xs text-slate-600 hover:bg-slate-200 sm:text-sm"
-                  >
-                    {copiedPlatform === step.platform ? "Copied!" : "Copy"}
-                  </button>
-                </div>
-                <code className="block break-all rounded bg-slate-800 p-3 text-xs text-green-400 sm:text-sm">
-                  {step.command}
-                </code>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-4 rounded-lg border-2 border-dashed border-slate-300 p-4 text-center sm:mt-6 sm:p-5">
-            <p className="text-xs text-slate-600 sm:text-sm">
-              Or build from source:{" "}
-              <code className="rounded bg-slate-100 px-2 py-1 text-xs break-all sm:text-sm">
-                git clone https://github.com/jiangtao/cc-config.git && cd cconf && make build && sudo make install
-              </code>
             </p>
           </div>
         </div>
